@@ -1,0 +1,16 @@
+## Binaries
+bin/*
+
+## SAM Local deployment artifacts
+packaged.yaml
+
+## Debug
+debug/
+temp.txt
+
+## SQLite databases
+test/*.db
+*.db
+
+## macOS
+.DS_Store

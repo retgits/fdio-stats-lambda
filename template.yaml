@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: Serverless Application Model for FDIO-stats-Lambda
+Resources:
+  fdiostats:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      CodeUri: bin/
+      Handler: fdio-stats-lambda
+      Runtime: go1.x
+      Tracing: Active
+      Timeout: 180
+      Policies:
+        - AmazonS3FullAccess
+        - AmazonSSMReadOnlyAccess
+        - AWSLambdaRole
+      Environment:
+        Variables:
+          region: us-west-2
+          s3bucket: retgits-fdio
+          tempFolder: /tmp
+      Tags:
+        version: "0.1.1"
+      Events:
+        fdiostats:
+          Type: Schedule
+          Properties:
+            Schedule: cron(0 13 ? * SAT *) # Run at 1:00 pm (UTC) on Saturday
+      Description: Sending Flogo stats to Trello
+      MemorySize: 128
